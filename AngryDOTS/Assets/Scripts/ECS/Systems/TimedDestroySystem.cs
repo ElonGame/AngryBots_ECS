@@ -16,7 +16,7 @@ public class TimedDestroySystem : JobComponentSystem
 
 	struct CullingJob : IJobForEachWithEntity<TimeToLive>
 	{
-		public EntityCommandBuffer.Concurrent commands;
+		public EntityCommandBuffer.ParallelWriter commands;
 		public float dt;
 
 		public void Execute(Entity entity, int jobIndex, ref TimeToLive timeToLive)
@@ -31,7 +31,7 @@ public class TimedDestroySystem : JobComponentSystem
 	{
 		var job = new CullingJob
 		{
-			commands = buffer.CreateCommandBuffer().ToConcurrent(),
+			commands = buffer.CreateCommandBuffer().AsParallelWriter(),
 			dt = UnityEngine.Time.deltaTime
 		};
 
