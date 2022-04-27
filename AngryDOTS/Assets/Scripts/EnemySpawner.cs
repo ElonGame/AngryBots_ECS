@@ -16,6 +16,8 @@ public class EnemySpawner : MonoBehaviour
 	
 	EntityManager manager;
 	Entity enemyEntityPrefab;
+	private BlobAssetStore _blobAssetStore;
+    	private GameObjectConversionSettings _settings;
 
 	float cooldown;
 
@@ -25,7 +27,9 @@ public class EnemySpawner : MonoBehaviour
 		if (useECS)
 		{
 			manager = World.Active.EntityManager;
-			enemyEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(enemyPrefab, World.Active);
+			_blobAssetStore = new BlobAssetStore();
+            		_settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, _blobAssetStore);
+			enemyEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(enemyPrefab, _settings);
 		}
 	}
 
