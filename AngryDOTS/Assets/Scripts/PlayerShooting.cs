@@ -17,6 +17,8 @@ public class PlayerShooting : MonoBehaviour
 
 	[Header("Bullets")]
 	public GameObject bulletPrefab;
+	private BlobAssetStore _blobAssetStore;
+    	private GameObjectConversionSettings _settings;
 
 	float timer;
 
@@ -28,8 +30,10 @@ public class PlayerShooting : MonoBehaviour
 	{
 		if (useECS)
 		{
-			manager = World.Active.EntityManager;
-			bulletEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(bulletPrefab, World.Active);
+			manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+			_blobAssetStore = new BlobAssetStore();
+            		_settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, _blobAssetStore);
+			bulletEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(bulletPrefab, _settings);
 		}
 	}
 
