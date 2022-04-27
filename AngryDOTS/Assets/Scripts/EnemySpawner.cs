@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
 	{
 		if (useECS)
 		{
-			manager = World.Active.EntityManager;
+			manager = World.DefaultGameObjectInjectionWorld.EntityManager;
 			_blobAssetStore = new BlobAssetStore();
             		_settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, _blobAssetStore);
 			enemyEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(enemyPrefab, _settings);
